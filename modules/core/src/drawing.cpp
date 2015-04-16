@@ -1660,7 +1660,7 @@ void line( Mat& img, Point pt1, Point pt2, const Scalar& color,
     if( line_type == CV_AA && img.depth() != CV_8U )
         line_type = 8;
 
-    CV_Assert( 0 <= thickness && thickness <= 255 );
+    CV_Assert( 0 <= thickness );
     CV_Assert( 0 <= shift && shift <= XY_SHIFT );
 
     double buf[4];
@@ -1694,7 +1694,6 @@ void rectangle( Mat& img, Point pt1, Point pt2,
     if( lineType == CV_AA && img.depth() != CV_8U )
         lineType = 8;
 
-    CV_Assert( thickness <= 255 );
     CV_Assert( 0 <= shift && shift <= XY_SHIFT );
 
     double buf[4];
@@ -1733,8 +1732,7 @@ void circle( Mat& img, Point center, int radius,
     if( line_type == CV_AA && img.depth() != CV_8U )
         line_type = 8;
 
-    CV_Assert( radius >= 0 && thickness <= 255 &&
-        0 <= shift && shift <= XY_SHIFT );
+    CV_Assert( radius >= 0 && 0 <= shift && shift <= XY_SHIFT );
 
     double buf[4];
     scalarToRawData(color, buf, img.type(), 0);
@@ -1760,7 +1758,7 @@ void ellipse( Mat& img, Point center, Size axes,
         line_type = 8;
 
     CV_Assert( axes.width >= 0 && axes.height >= 0 &&
-        thickness <= 255 && 0 <= shift && shift <= XY_SHIFT );
+        0 <= shift && shift <= XY_SHIFT );
 
     double buf[4];
     scalarToRawData(color, buf, img.type(), 0);
@@ -1783,8 +1781,7 @@ void ellipse(Mat& img, const RotatedRect& box, const Scalar& color,
     if( lineType == CV_AA && img.depth() != CV_8U )
         lineType = 8;
 
-    CV_Assert( box.size.width >= 0 && box.size.height >= 0 &&
-               thickness <= 255 );
+    CV_Assert( box.size.width >= 0 && box.size.height >= 0 );
 
     double buf[4];
     scalarToRawData(color, buf, img.type(), 0);
@@ -1846,8 +1843,7 @@ void polylines( Mat& img, const Point** pts, const int* npts, int ncontours, boo
         line_type = 8;
 
     CV_Assert( pts && npts && ncontours >= 0 &&
-               0 <= thickness && thickness <= 255 &&
-               0 <= shift && shift <= XY_SHIFT );
+               0 <= thickness && 0 <= shift && shift <= XY_SHIFT );
 
     double buf[4];
     scalarToRawData( color, buf, img.type(), 0 );
@@ -2250,8 +2246,6 @@ cvDrawContours( void* _img, CvSeq* contour,
 
     if( !contour )
         return;
-
-    CV_Assert( thickness <= 255 );
 
     scalarToRawData( externalColor, ext_buf, img.type(), 0 );
     scalarToRawData( holeColor, hole_buf, img.type(), 0 );
